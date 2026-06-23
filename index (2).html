@@ -595,7 +595,7 @@ body {
 
 /* ---------- date cards ---------- */
 .date-choice {
-  width: min(920px, 94vw);
+  width: min(980px, 94vw);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -610,118 +610,102 @@ body {
 }
 
 .date-choice-sub {
+  max-width: min(560px, 88vw);
   color: var(--ink-soft);
   font-size: clamp(13px, 3.6vw, 15px);
+  line-height: 1.45;
   margin-top: -6px;
 }
 
 .date-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(10px, 2vw, 16px);
 }
 
 .date-card {
-  height: 242px;
-  perspective: 1000px;
+  min-height: 340px;
   cursor: pointer;
   border: none;
-  background: transparent;
+  border-radius: 24px;
+  background: rgba(255,255,255,.94);
   color: inherit;
   font: inherit;
-  text-align: center;
-}
-
-.date-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform .7s cubic-bezier(.2,.7,.3,1);
-  transform-style: preserve-3d;
-}
-
-.date-card.open .date-card-inner {
-  transform: rotateY(180deg);
-}
-
-.date-card-front,
-.date-card-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 22px;
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(224,140,164,.28);
+  text-align: left;
   box-shadow: var(--shadow);
-  padding: 14px;
+  border: 1px solid rgba(224,140,164,.28);
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 10px;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
-.date-card-front {
-  gap: 9px;
+.date-card:active {
+  transform: scale(.98);
 }
 
-.date-card-emoji {
-  width: 54px;
-  height: 54px;
+.date-card.open {
+  border-color: rgba(224,140,164,.75);
+  box-shadow: 0 12px 34px rgba(224,140,164,.22);
+}
+
+.date-card-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 18px;
-  background: linear-gradient(145deg, #FFEFF2, #FFF4E7);
+  overflow: hidden;
+  background: linear-gradient(160deg, #FBD9CE, #E7DCF5 60%, #F6E5C8);
   display: grid;
   place-items: center;
-  font-size: 29px;
-  box-shadow: 0 8px 20px rgba(224,140,164,.16);
 }
 
-.date-card-front strong {
-  font-family: var(--f-round);
-  font-size: clamp(16px, 3.8vw, 20px);
-}
-
-.date-card-front small {
-  color: var(--ink-soft);
-  line-height: 1.35;
-}
-
-.date-card-back {
-  transform: rotateY(180deg);
-  justify-content: flex-start;
-  gap: 7px;
-}
-
-.date-card-back img {
+.date-card-photo img {
   width: 100%;
-  height: 98px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 16px;
-  background: linear-gradient(160deg, #FBD9CE, #E7DCF5 60%, #F6E5C8);
   display: block;
 }
 
-.date-card-back h3 {
+.date-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.date-card-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--f-round);
-  font-size: 16px;
-  line-height: 1.2;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--ink);
 }
 
-.date-place {
-  font-size: 12px;
-  color: var(--pink-deep);
-  font-weight: 700;
-}
-
-.date-card-back p {
+.date-card-row {
   font-size: 12.5px;
   line-height: 1.35;
   color: var(--ink-soft);
 }
 
+.date-card-row b {
+  color: var(--pink-deep);
+  font-weight: 800;
+}
+
+.date-card-plan {
+  margin-top: 2px;
+  padding-top: 8px;
+  border-top: 1px dashed #EAD6C6;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
 .date-no-choice {
-  max-width: min(420px, 88vw);
+  max-width: min(500px, 88vw);
   padding: 13px 18px;
   border-radius: 999px;
   background: rgba(255,255,255,.82);
@@ -732,11 +716,20 @@ body {
   font-size: clamp(14px, 3.8vw, 16px);
 }
 
-.chosen-date {
-  min-height: 1.4em;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--pink-deep);
+@media (max-width: 980px) {
+  .date-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .date-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .date-card {
+    min-height: auto;
+  }
 }
 
 /* ---------- final ticket ---------- */
@@ -917,10 +910,6 @@ body {
   .date-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .date-card {
-    height: 226px;
-  }
 }
 
 @media (max-width: 520px) {
@@ -933,10 +922,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .date-card {
-    height: 218px;
-  }
-
   #s-final {
     justify-content: flex-start;
   }
@@ -945,14 +930,6 @@ body {
 @media (max-height: 670px) {
   .cat-box--mini {
     display: none;
-  }
-
-  .date-card {
-    height: 200px;
-  }
-
-  .date-card-back img {
-    height: 76px;
   }
 
   #s-final {
@@ -1026,13 +1003,11 @@ body {
 
     <section class="date-choice">
       <h2>выбери нашу свиданку</h2>
-      <p class="date-choice-sub">нажми на карточку — она перевернётся, а билет снизу поменяется</p>
+      <p class="date-choice-sub">каждая карточка — отдельная идея, а выбора у тя нет, мы должны всё попробовать</p>
 
       <div class="date-grid" id="dateGrid"></div>
 
       <p class="date-no-choice">а выбора у тя нет, мы должны всё попробовать</p>
-
-      <p id="chosenDateText" class="chosen-date"></p>
     </section>
 
     <div class="final-cards">
@@ -1099,7 +1074,7 @@ const CONFIG = {
   noGoneText: 'кнопка устала убегать',
 
   defaultPhotoPlaceholder: 'тут будет наша фотка после дейт',
-  polaroidCaption: 'очень нишево',
+  polaroidCaption: 'тут будет наша фотка после свиданий',
   finalTitle: 'хех я рада!',
   finalSub: 'жду не дождусь тебя и провести лето вместеее',
   signature: 'я тебя очень люблю,\nжаным менин',
@@ -1116,27 +1091,27 @@ const CONFIG = {
       note: 'фотаться!!11111!',
       photo: 'https://res.cloudinary.com/dlr5ndlss/image/upload/v1782235437/photo_2026-06-23_22-23-30_qthmhl.jpg',
       caption: 'ностальгия вайб',
-      plan: 'покушаем , поиграем и пойдём гулять мухахаха!'
+      plan: 'покушаем, поиграем и пойдём гулять мухахаха!'
     },
     {
       title: 'бассейн можт',
       emoji: '🏊🏼',
       when: 'когда жарко',
-      where: 'уютное кафе',
+      where: 'бассейн',
       note: 'а можно и в закрытый дее',
       photo: 'https://res.cloudinary.com/dlr5ndlss/image/upload/v1782235437/photo_2026-06-23_22-23-31_gbjemp.jpg',
       caption: 'теплый вайб',
-      plan: 'поплаваем и будем соревноватся кто продержится дольше под водой'
+      plan: 'поплаваем и будем соревноваться, кто продержится дольше под водой.'
     },
     {
       title: 'борьба вроде',
       emoji: '🤼',
-      when: 'ну стоит когда то',
-      where: 'где то',
+      when: 'ну стоит когда-то',
+      where: 'где-то',
       note: 'я уже морально готовлюсь ахаха',
       photo: 'https://res.cloudinary.com/dlr5ndlss/image/upload/v1782235438/photo_2026-06-23_22-19-19_kkmepb.jpg',
       caption: 'жесткий вайб',
-      plan: 'пойдем вечером, поборемся и просто побесимся (в основном я).'
+      plan: 'пойдём вечером, поборемся и просто побесимся, в основном я.'
     },
     {
       title: 'синема',
@@ -1146,7 +1121,7 @@ const CONFIG = {
       note: 'еда вроде нужна',
       photo: 'https://res.cloudinary.com/dlr5ndlss/image/upload/v1782235437/photo_2026-06-23_22-19-14_mbbbp4.jpg',
       caption: 'киношный вайб',
-      plan: 'выберем фильм, покушаем (друг-друга), а потом ещё немного погуляем.'
+      plan: 'выберем фильм, возьмём вкусняшки, а потом ещё немного погуляем.'
     }
   ]
 };
@@ -1872,102 +1847,69 @@ function initQuestion() {
 }
 
 // ---------- date cards ----------
-function safeImg(src) {
-  const img = new Image();
-  img.src = src;
-  img.alt = '';
-  img.onerror = () => {
-    img.replaceWith(document.createElement('span'));
-  };
-  return img;
-}
-
-function setTicketByDate(item) {
-  $('#ticketTag').textContent = 'идеи на свидание';
-  $('#ticketWhen').textContent = item.when;
-  $('#ticketWhere').textContent = item.where;
-  $('#ticketNote').textContent = item.note;
-  $('#ticketPlan').textContent = item.plan;
-  $('#polaroidCaption').textContent = item.caption || CONFIG.polaroidCaption;
+function setGeneralTicket() {
+  $('#ticketTag').textContent = 'маленькое напоминание';
+  $('#ticketWhen').textContent = 'а вообще свиданий та много канеш';
+  $('#ticketWhere').textContent = 'просто главное такие не пропустить дае вот';
+  $('#ticketNote').textContent = 'так что выбора у тя всё равно нет';
+  $('#ticketPlan').textContent = 'мы должны всё попробовать: теннис, бассейн, борьбу, кино и ещё куча всего потом.';
+  $('#polaroidCaption').textContent = CONFIG.polaroidCaption;
 
   const photo = $('#photo');
-  photo.innerHTML = '';
-
-  if (item.photo) {
-    const img = new Image();
-    img.src = item.photo;
-    img.alt = '';
-
-    img.onerror = () => {
-      photo.innerHTML = `<span>${CONFIG.defaultPhotoPlaceholder}</span>`;
-    };
-
-    photo.append(img);
-  } else {
-    photo.innerHTML = `<span>${CONFIG.defaultPhotoPlaceholder}</span>`;
-  }
+  photo.innerHTML = `<span>${CONFIG.defaultPhotoPlaceholder}</span>`;
 }
 
-function selectDate(index, shouldOpen = true) {
+function selectDate(index) {
   const item = CONFIG.dates[index];
   if (!item) return;
 
   $$('.date-card').forEach((card, i) => {
-    card.classList.toggle('open', shouldOpen && i === index);
+    card.classList.toggle('open', i === index);
   });
 
-  $('#chosenDateText').textContent = `выбрано: ${item.when}, ${item.where}`;
-  setTicketByDate(item);
+  setGeneralTicket();
 }
+
 
 function initDateChoices() {
   const grid = $('#dateGrid');
+  grid.innerHTML = '';
+
   CONFIG.dates.forEach((item, i) => {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'date-card';
 
     card.innerHTML = `
-      <span class="date-card-inner">
-        <span class="date-card-front">
-          <span class="date-card-emoji">${item.emoji || '💌'}</span>
-          <strong>${item.title}</strong>
-          <small>${item.when}<br>${item.where}</small>
-        </span>
+      <span class="date-card-photo">
+        <img src="${item.photo}" alt="">
+      </span>
 
-        <span class="date-card-back">
-          <img src="${item.photo}" alt="">
-          <h3>${item.when}</h3>
-          <span class="date-place">${item.where}</span>
-          <p>${item.plan}</p>
-        </span>
+      <span class="date-card-body">
+        <span class="date-card-title">${item.emoji || '💌'} ${item.title}</span>
+        <span class="date-card-row"><b>when:</b> ${item.when}</span>
+        <span class="date-card-row"><b>where:</b> ${item.where}</span>
+        <span class="date-card-row"><b>note:</b> ${item.note}</span>
+        <span class="date-card-row"><b>vibe:</b> ${item.caption}</span>
+        <span class="date-card-plan">${item.plan}</span>
       </span>
     `;
 
     const img = card.querySelector('img');
     img.onerror = () => {
-      img.style.display = 'none';
+      img.remove();
+      card.querySelector('.date-card-photo').innerHTML = `<span>${CONFIG.defaultPhotoPlaceholder}</span>`;
     };
 
     card.addEventListener('click', () => {
-      const isOpen = card.classList.contains('open');
-
-      if (isOpen) {
-        card.classList.remove('open');
-        setTicketByDate(item);
-        $('#chosenDateText').textContent = '';
-      } else {
-        selectDate(i, true);
-      }
-
+      selectDate(i);
       playPop();
     });
 
     grid.append(card);
-
   });
 
-  setTicketByDate(CONFIG.dates[0]);
+  setGeneralTicket();
 }
 
 // ---------- screen 5 ----------
